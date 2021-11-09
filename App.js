@@ -1,14 +1,11 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
+// screens
+import Login from './screens/Login';
+
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Hello Word!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+  return <Login />;
 }
 
 const styles = StyleSheet.create({
