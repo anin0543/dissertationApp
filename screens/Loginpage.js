@@ -23,18 +23,20 @@ import {
     Colors,
     MsgBox,
     Line,
-    Text,
     TextUnderButton,
-} from './../components/styles.js';
+} from '../components/styles.js';
 import {View} from 'react-native';
 
 // Colors
 const {brand, darkLight, primary } = Colors;
 
-const Login = () => {
+const Login = ({navigation}) => {
     const [hidePassword, setHidePassword] = useState(true);
+    // const state = useState(false);
+
 
     return (
+        
         <StyledContainer>
             <StatusBar style="dark" />
             <InnerContrainer>
@@ -45,6 +47,7 @@ const Login = () => {
                     initialValues={{email:'', password: ''}}
                     onSubmit= {(values) =>  {
                         console.log(values);
+                        // navigation.navigate("Home");
                     }}
                 >
                     {({handleChange, handleBlur, handleSubmit, values}) => (<StyledFormArea>
@@ -54,6 +57,7 @@ const Login = () => {
                             placeholder="email"
                             placeholderTextColor={darkLight}
                             onChangeText={handleChange('email')}
+                            // onChangeText={(text) => this.setState({email:text})}
                             onBlur={handleBlur('email')}
                             value={values.email}
                             keyboardType="email-address"
@@ -65,6 +69,7 @@ const Login = () => {
                             placeholder="* * * * * * * *"
                             placeholderTextColor={darkLight}
                             onChangeText={handleChange('password')}
+                            // onChangeText={(text) => this.setState({password:text})}
                             onBlur={handleBlur('password')}
                             value={values.password}
                             secureTextEntry={hidePassword}
@@ -74,7 +79,7 @@ const Login = () => {
                         />
 
                         <MsgBox>...</MsgBox>
-                        <StyledButton onPress={handleSubmit}>
+                        <StyledButton onPress={() => navigation.navigate("Home")}>
                             <ButtonText>Login</ButtonText>
                         </StyledButton>
 
