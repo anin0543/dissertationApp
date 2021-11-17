@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useContext, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 
 import {Formik} from 'formik';
@@ -25,15 +25,53 @@ import {
     Line,
     TextUnderButton,
 } from '../components/styles.js';
-import {View} from 'react-native';
+import {
+    View,
+    StyleSheet,
+    Image,
+    TouchableWithoutFeedback,
+    Keyboard,
+    KeyboardAvoidingView,
+  } from 'react-native';
+
+import { TextInput, Button, Text } from 'react-native-paper';
+import mainContext from '../context/Context'; //Context
+import Home from './Homepage';
 
 // Colors
 const {brand, darkLight, primary } = Colors;
 
+// API client
+import axios from 'axios';
+
 const Login = ({navigation}) => {
     const [hidePassword, setHidePassword] = useState(true);
-    // const state = useState(false);
+    const [message, setMessage] = useState();
+    const [messageType, setMessageType] = useState();
 
+    const [username, setUsername] = useState(null);
+    const [password, setPassword] = useState(null);
+    const { userProfile, loggingIn, doLogin, error } = useContext(mainContext); //Objects and function from App.js passed via context
+
+    const handleMessage = (message) => {
+        setMessage(message);
+        // setMessageType(type);
+    }
+
+
+    // const handleLogin = (credentials) => {
+    //     const url = 'https://pleaz.io/wp-json/wp/v2/posts/';
+
+    //     axios
+    //         .post(url, credentials)
+    //         .then((response) => {
+    //             const result = response.data;
+    //             const {data} = result;
+    //         })
+    //         .catch(error => {
+    //         console.log(error.JSON());
+    //     })
+    // }
 
     return (
         
@@ -44,10 +82,11 @@ const Login = ({navigation}) => {
                 <SubTitle>Account Login</SubTitle>
 
                 <Formik
-                    initialValues={{email:'', password: ''}}
-                    onSubmit= {(values) =>  {
-                        console.log(values);
-                        // navigation.navigate("Home");
+                    // initialValues={{username:'', password: ''}}
+                    onSubmit= {() =>  {
+                        if (username == '' || password == '') {
+                            handleMessage('Please fill all the fields');
+                        }
                     }}
                 >
                     {({handleChange, handleBlur, handleSubmit, values}) => (<StyledFormArea>
@@ -56,11 +95,12 @@ const Login = ({navigation}) => {
                             icon="mail"
                             placeholder="email"
                             placeholderTextColor={darkLight}
-                            onChangeText={handleChange('email')}
-                            // onChangeText={(text) => this.setState({email:text})}
+                            // onChangeText={handleChange('username')}
+                            onChangeText={(username) => setUsername(username)}
                             onBlur={handleBlur('email')}
-                            value={values.email}
+                            value={username}
                             keyboardType="email-address"
+                            // disabled={loggingIn}
                         />
 
                         <MyTextInput 
@@ -68,18 +108,23 @@ const Login = ({navigation}) => {
                             icon="lock"
                             placeholder="* * * * * * * *"
                             placeholderTextColor={darkLight}
-                            onChangeText={handleChange('password')}
-                            // onChangeText={(text) => this.setState({password:text})}
+                            // onChangeText={handleChange('password')}
+                            onChangeText={(password) => setPassword(password)}
                             onBlur={handleBlur('password')}
-                            value={values.password}
+                            value={password}
                             secureTextEntry={hidePassword}
                             isPassword={true}
                             hidePassword={hidePassword}
                             setHidePassword={setHidePassword}
+                            // disabled={loggingIn}
                         />
 
-                        <MsgBox>...</MsgBox>
-                        <StyledButton onPress={() => navigation.navigate("Home")}>
+                        <MsgBox type={messageType}>{message}</MsgBox>
+                        
+                        <StyledButton title="Login to Site"
+                            onPress={() => doLogin(username, password)}
+                            // disabled={loggingIn}
+                        >
                             <ButtonText>Login</ButtonText>
                         </StyledButton>
 
@@ -116,5 +161,19 @@ const MyTextInput = ({label, icon, isPassword, hidePassword, setHidePassword, ..
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    error: {
+        backgroundColor: '#f8d7da',
+        padding: 10,
+        width: '80%',
+        borderRadius: 5,
+        borderColor: '#f5c6cb',
+        marginBottom: 20,
+    },
+      errortext: {
+        color: '#721c24',
+    }
+});
 
 export default Login;
