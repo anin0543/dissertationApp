@@ -16,15 +16,6 @@ import axios from 'axios'
 // React Navigator Stack
 import RootStack from './navigators/RootStack';
 
-// import AppStore from './components/store'
-
-// import {
-//   StatusBar,
-// } from 'react-native';
-
-// if (!window.store) {
-//   const store = window.store = new AppStore()
-// }
 
 export default function App({navigation}) {
 

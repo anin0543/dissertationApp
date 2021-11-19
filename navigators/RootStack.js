@@ -10,6 +10,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 // screens
 import Login from './../screens/Loginpage';
 import Home from './../screens/Homepage';
+import Splash from '../screens/Splash';
 import TestLogin from './../screens/TestLogin';
 import TestHome from './../screens/TestHome';
 
