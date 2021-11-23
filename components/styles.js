@@ -136,6 +136,7 @@ export const MsgBox = styled.Text`
     text-align: center;
     font-size: 13px;
     padding-top:10px;
+    color:red;
 `;
 
 export const Line = styled.View`

@@ -28,6 +28,7 @@ import {
 import {
     View,
     StyleSheet,
+    ActivityIndicator,
     Image,
     TouchableWithoutFeedback,
     Keyboard,
@@ -45,13 +46,15 @@ const {brand, darkLight, primary } = Colors;
 import axios from 'axios';
 
 const Login = ({navigation}) => {
-    const [hidePassword, setHidePassword] = useState(true);
-    const [message, setMessage] = useState();
-    const [messageType, setMessageType] = useState();
-
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
-    const { userProfile, loggingIn, doLogin, error } = useContext(mainContext); //Objects and function from App.js passed via context
+
+    const [hidePassword, setHidePassword] = useState(true);
+
+    const [submitting, setSubmitting] = useState(null);
+    const [message, setMessage] = useState();
+    // const [messageType, setMessageType] = useState();
+
 
     const handleMessage = (message) => {
         setMessage(message);
@@ -59,19 +62,48 @@ const Login = ({navigation}) => {
     }
 
 
-    // const handleLogin = (credentials) => {
-    //     const url = 'https://pleaz.io/wp-json/wp/v2/posts/';
+    const doLogin = async (username, password) => {
+        // console.log(email + '...' + password);
+        // setloggingIn(true);
+        // setError(null);
 
-    //     axios
-    //         .post(url, credentials)
-    //         .then((response) => {
-    //             const result = response.data;
-    //             const {data} = result;
-    //         })
-    //         .catch(error => {
-    //         console.log(error.JSON());
-    //     })
-    // }
+        handleMessage(null);
+        let formData = new FormData();
+        formData.append('type', 'login');
+        formData.append('username', username);
+        formData.append('password', password);
+        
+    
+        axios.post('http://test04.onpressidium.com/wp-json/jwt-auth/v1/token', formData)
+        .then((res) => {
+        console.log(res.data);
+        localStorage.setItem('token', res.data.token);
+        localStorage.setItem('user_nicename', res.data.user_nicename);
+        localStorage.setItem('user_email', res.data.user_email);
+        localStorage.setItem('user_display_name', res.data.user_display_name);
+
+        // if( username === '' || password === '' ) {
+        //     handleMessage("Please fill all the fields");
+        // }
+
+        if(!res.data.user_email) {
+            handleMessage("Please fill all the fields");
+        }
+    
+        if(!res.data.token) {
+          handleMessage('error');
+        } else {
+          navigation.navigate('Home');
+        }
+        setSubmitting(false);
+    
+        })
+        .catch((err) => {
+          console.log(err);
+          setSubmitting(false);
+          handleMessage("An error occured. Check your network or try again");
+        });
+      };
 
     return (
         
@@ -82,14 +114,17 @@ const Login = ({navigation}) => {
                 <SubTitle>Account Login</SubTitle>
 
                 <Formik
-                    // initialValues={{username:'', password: ''}}
-                    onSubmit= {() =>  {
+                    //initialValues={{username:'', password: ''}}
+                    onPress = {({username, password, setSubmitting}) =>  {
                         if (username == '' || password == '') {
-                            handleMessage('Please fill all the fields');
+                            handleMessage("Please fill all the fields");
+                            setSubmitting(false);
+                        } else {
+                            doLogin(username, password);
                         }
                     }}
                 >
-                    {({handleChange, handleBlur, handleSubmit, values}) => (<StyledFormArea>
+                    {({handleChange, handleBlur, handleSubmit, values, isSubmitting}) => (<StyledFormArea>
                         <MyTextInput 
                             label="Email Address"
                             icon="mail"
@@ -119,14 +154,20 @@ const Login = ({navigation}) => {
                             // disabled={loggingIn}
                         />
 
-                        <MsgBox type={messageType}>{message}</MsgBox>
+                        <MsgBox>{message}</MsgBox>
                         
+                        {!isSubmitting && (
                         <StyledButton title="Login to Site"
                             onPress={() => doLogin(username, password)}
                             // disabled={loggingIn}
                         >
                             <ButtonText>Login</ButtonText>
-                        </StyledButton>
+                        </StyledButton>)}
+
+                        {isSubmitting && (
+                        <StyledButton disabled={true}>
+                            <ActivityIndicator size="large" color={primary} />
+                        </StyledButton>)}
 
                         <TextUnderButton>Lost Your Password ?</TextUnderButton>
                         <Line/>
