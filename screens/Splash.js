@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
-import * as SplashScreen from 'expo-splash-screen';
+// import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 import { PageLogo } from '../components/styles.js';
 
