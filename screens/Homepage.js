@@ -1,18 +1,12 @@
-import React from 'react';
-import { Text, View } from 'react-native';
-
-const Home = ({navigation, route }) => {
-  // const { user_display_name, user_email } = route.params;
-  var user_email = localStorage.getItem('user_email');
-  var user_display_name = localStorage.getItem('user_display_name');
-  
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text> Welcome 🎉</Text>
-      <Text>{user_display_name } </Text>
-      <Text>{user_email } </Text>
-    </View>
-  );
-}
+import { StyleSheet, Text, View } from "react-native";
+import Header from "../components/header";
+import { StatusBar } from "expo-status-bar";
+import React, { useEffect, useState } from "react";
+import { Navbar } from "../components/styles";
+const Home = () => (
+  <Text>
+    <Header />
+  </Text>
+);
 
 export default Home;
