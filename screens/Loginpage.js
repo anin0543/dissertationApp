@@ -93,7 +93,7 @@ const Login = ({navigation}) => {
         if(!res.data.token) {
           handleMessage('error');
         } else {
-          navigation.navigate('Home');
+          navigation.navigate('Hometab');
         }
         setSubmitting(false);
     
