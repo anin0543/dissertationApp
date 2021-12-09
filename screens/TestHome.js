@@ -7,7 +7,6 @@ import { BottomNavigation, Text , Avatar, Button, Card, Title, Paragraph } from 
 import { Colors } from '../components/styles.js';
 import { CustomPagination } from '../components/CustomPagination';
 import {TextInput,ScrollView,TouchableOpacity} from 'react-native-gesture-handler'
-import LinearGradient from 'react-native-linear-gradient';
 
 
 const { width, height } = Dimensions.get('window');
