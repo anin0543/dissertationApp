@@ -2,7 +2,7 @@
 // import { StyleSheet, Text, View } from 'react-native';
 
 import React, { useEffect, useState, useMemo } from 'react';
-import 'localstorage-polyfill'; 
+import 'localstorage-polyfill';
 import { StyleSheet, Text, View, StatusBar } from 'react-native';
 import { loginUrl } from './const/const';
 import { NavigationContainer } from '@react-navigation/native';

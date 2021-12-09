@@ -29,10 +29,11 @@ const designResolution = {
 const perfectSize = create(designResolution);
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 0,
+    marginTop: -35,
     backgroundColor: Colors.white,
     borderBottomWidth: 2,
-    borderBottomColor: "black",
+    borderBottomColor: "#C0C0C0",
   },
 
   header: {
