@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Image, ImageBackground, StyleSheet } from "react-native";
+import { View, Text, Image, ImageBackground, StyleSheet, FlatList } from "react-native";
 
 import {
   TextInput,
@@ -18,11 +18,99 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import SearchVideo from "../screens/SearchVideopage";
 import { SideBar } from "../navigators/RootStack";
 
-// import { LinearGradient } from 'expo-linear-gradient'
-// import LinearGradient from 'react-native-linear-gradient';
+
+const data = [
+  {
+    id: 1,
+    title: 'Computer Neck',
+    image: require('./../assets/images/4.png'),
+    duration: '2 min',
+    categorie: 'Functionals',
+  },
+  {
+    id: 2,
+    title: 'Yoga deluxe Pagman',
+    image: require('./../assets/images/5.png'),
+    duration: '4 min',
+    categorie: 'Officeyoga',
+  },
+  {
+    id: 3,
+    title: 'Catchdemall',
+    image: require('./../assets/images/6.png'),
+    duration: '3 min',
+    categorie: 'Fun breaks',
+  },
+]
+
+const Item = ({ item }) => (
+  
+  <View style={styles.item}>
+    <ScrollView
+    showsHorizontalScrollIndicator={false}
+    style={{ height: 400 }}
+    >
+    <TouchableOpacity
+      // onPress={() => navigation.navigate("Detail")}
+      style={{
+        height: 250,
+        elevation: 2,
+        backgroundColor: "#FFF",
+        marginLeft: 20,
+        marginTop: 20,
+        borderRadius: 15,
+        marginBottom: 10,
+        width: 160
+      }}
+    >
+      <Image
+        source={item.image}
+      />
+
+      <Text style={{
+        fontWeight: "bold",
+        paddingHorizontal: 10,
+        color: "#333333",
+        paddingTop: 3
+      }}>{item.title}</Text>
+
+      <View style={{
+        flexDirection: "row",
+        paddingTop: 10,
+        paddingHorizontal: 10
+      }}>
+
+        <Text style={{
+          paddingHorizontal: 3,
+          color: "#333333",
+          paddingTop: 0
+        }}>
+          {item.categorie}
+        </Text>
+        <Text style={{
+          fontWeight: "bold",
+          color: "#333333",
+          paddingLeft: 25
+        }}>{ item.duration }</Text>
+      </View>
+    </TouchableOpacity>
+
+  </ScrollView>
+  </View>
+);
 
 const Home = () => {
    navigationOptions = { header: null }
+
+   const renderItem = ({ item }) => {
+    return (
+      <Item
+        item={item}
+      />
+    );
+  };
+
+
   return (
     <>
       <View
@@ -156,162 +244,8 @@ const Home = () => {
             </View>
           </View>
 
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            style={{ height: 400 }}
-          >
-            <TouchableOpacity
-              // onPress={() => navigation.navigate("Detail")}
-              style={{
-                height: 250,
-                elevation: 2,
-                backgroundColor: "#FFF",
-                marginLeft: 20,
-                marginTop: 20,
-                borderRadius: 15,
-                marginBottom: 10,
-                width: 160,
-              }}
-            >
-              <Image source={require("./../assets/images/4.png")} />
-
-              <View
-                style={{
-                  flexDirection: "row",
-                  paddingTop: 10,
-                  paddingHorizontal: 10,
-                }}
-              >
-                <Text
-                  style={{
-                    fontWeight: "bold",
-                  }}
-                >
-                  SAMANTHA
-                </Text>
-                <Text
-                  style={{
-                    fontWeight: "bold",
-                    color: "#333333",
-                    paddingLeft: 35,
-                  }}
-                >
-                  $400
-                </Text>
-              </View>
-              <Text
-                style={{
-                  paddingHorizontal: 10,
-                  fontWeight: "bold",
-                  color: "#333333",
-                  paddingTop: 3,
-                }}
-              >
-                RUSSIA
-              </Text>
-            </TouchableOpacity>
-
-            <View
-              // onPress={()=>navigation.navigate("Detail")}
-              style={{
-                height: 250,
-                elevation: 2,
-                backgroundColor: "#FFF",
-                marginLeft: 20,
-                marginTop: 20,
-                borderRadius: 15,
-                marginBottom: 10,
-                width: 160,
-              }}
-            >
-              <Image source={require("./../assets/images/5.png")} />
-              <View
-                style={{
-                  flexDirection: "row",
-                  paddingTop: 10,
-                  paddingHorizontal: 10,
-                }}
-              >
-                <Text
-                  style={{
-                    fontWeight: "bold",
-                  }}
-                >
-                  ANGELICA
-                </Text>
-                <Text
-                  style={{
-                    fontWeight: "bold",
-                    color: "#333333",
-                    paddingLeft: 45,
-                  }}
-                >
-                  $400
-                </Text>
-              </View>
-              <Text
-                style={{
-                  paddingHorizontal: 10,
-                  fontWeight: "bold",
-                  color: "#333333",
-                  paddingTop: 3,
-                }}
-              >
-                RUSSIA
-              </Text>
-            </View>
-
-            <View
-              // onPress={()=>navigation.navigate("Detail")}
-              style={{
-                height: 250,
-                elevation: 2,
-                backgroundColor: "#FFF",
-                marginLeft: 20,
-                marginTop: 20,
-                borderRadius: 15,
-                marginBottom: 10,
-                width: 160,
-              }}
-            >
-              <Image source={require("./../assets/images/6.png")} />
-              <View
-                style={{
-                  flexDirection: "row",
-                  paddingTop: 10,
-                  paddingHorizontal: 10,
-                }}
-              >
-                <Text
-                  style={{
-                    fontWeight: "bold",
-                  }}
-                >
-                  SAMANTHA
-                </Text>
-                <Text
-                  style={{
-                    fontWeight: "bold",
-                    color: "#333333",
-                    paddingLeft: 35,
-                  }}
-                >
-                  $400
-                </Text>
-              </View>
-              <Text
-                style={{
-                  paddingHorizontal: 10,
-                  fontWeight: "bold",
-                  color: "#333333",
-                  paddingTop: 3,
-                }}
-              >
-                RUSSIA
-              </Text>
-            </View>
-          </ScrollView>
+          <FlatList horizontal data={data} renderItem={renderItem} keyExtractor={item => item.id} />
+          
         </View>
       </View>
     </>
